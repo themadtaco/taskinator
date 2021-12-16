@@ -28,9 +28,6 @@ var taskFormHandler = function(event) {
       status: "to do"
   };
 
-  console.log(taskDataObj);
-  console.log(taskDataObj.status);
-
   // has data attribute, so get task id and call function complete edit process
   if(isEdit) {
     var taskId = formEl.getAttribute("data-task-id");
@@ -231,6 +228,22 @@ var taskStatusChangeHandler = function(event){
 
 var saveTasks = function() {
   localStorage.setItem("tasks", JSON.stringify(tasks));
+};
+
+var loadTasks = function() {
+  var savedTasks = localStorage.getItem("tasks");
+
+  if (!savedTasks) {
+    return false;
+  }
+
+  savedTasks = JSON.parse(savedTasks);
+
+  // loop through savedTasks array
+  for (var i = 0; i < savedTasks.length; i++) {
+    // pass each task object into the 'createTaskEl()' function
+    createTaskEl(savedTasks[i]);
+  };
 };
 
 pageContentEl.addEventListener("click", taskButtonHandler);
